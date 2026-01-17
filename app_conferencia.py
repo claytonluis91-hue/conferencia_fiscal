@@ -174,10 +174,18 @@ if st.button("🚀 PROCESSAR CONFERÊNCIA", type="primary"):
                     'PIS_Interno', 'PIS_Cliente', 'Diff_PIS',
                     'COFINS_Interno', 'COFINS_Cliente', 'Diff_COFINS']
             
-            # Formatação para Exibição
+            # --- CORREÇÃO DO ERRO AQUI ---
+            # Define quais colunas são números para formatar
+            cols_numericas = ['PIS_Interno', 'PIS_Cliente', 'Diff_PIS',
+                              'COFINS_Interno', 'COFINS_Cliente', 'Diff_COFINS']
+            
             st.success("Conferência realizada com sucesso!")
             st.write("Visualização das maiores diferenças:")
-            st.dataframe(df_final[cols].head(50).style.format("{:.2f}"))
+            
+            # Aplica formatação APENAS nas colunas numéricas
+            st.dataframe(
+                df_final[cols].head(50).style.format({col: "{:.2f}" for col in cols_numericas})
+            )
 
             # Download Excel
             try:
